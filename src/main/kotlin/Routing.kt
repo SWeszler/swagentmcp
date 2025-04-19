@@ -1,6 +1,6 @@
 package com.sebastianweszler
 
-import com.sebastianweszler.modules.OllamaModule
+import com.sebastianweszler.services.OllamaService
 import io.ktor.resources.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.requestvalidation.RequestValidation
@@ -15,7 +15,7 @@ import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 
 fun Application.configureRouting() {
-    val ollamaModule: OllamaModule by inject()
+    val ollamaService: OllamaService by inject()
     
     install(RequestValidation) {
         validate<String> { bodyText ->
@@ -31,7 +31,7 @@ fun Application.configureRouting() {
             call.respondText("Hello World!")
         }
         get("/ollama") {
-            val response = ollamaModule.handlePrompt("what time is it?", "llama3.2")
+            val response = ollamaService.processPrompt("what time is it?", "llama3.2")
             call.respondText(response)
         }
         get<Articles> { article ->
