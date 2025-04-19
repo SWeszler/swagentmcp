@@ -6,4 +6,5 @@ ktor:
     port: 8080
 ollama:
   url: "http://localhost:11434"
+  model: "llama3.2"
 

@@ -1,5 +1,6 @@
 package com.sebastianweszler.services
 
+import com.sebastianweszler.config.OllamaConfig
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
@@ -16,15 +17,15 @@ data class OllamaResponse(
     val done: Boolean
 )
 
-class OllamaService(private val ollamaUrl: String) {
+class OllamaService(private val config: OllamaConfig) {
     private val client = HttpClient(CIO)
     private val json = Json { ignoreUnknownKeys = true }
 
-    suspend fun processPrompt(prompt: String, model: String): String {
-        val response = client.post("$ollamaUrl/api/generate") {
+    suspend fun processPrompt(prompt: String): String {
+        val response = client.post("${config.url}/api/generate") {
             contentType(ContentType.Application.Json)
             setBody(buildJsonObject {
-                put("model", model)
+                put("model", config.model)
                 put("prompt", prompt)
             }.toString())
         }

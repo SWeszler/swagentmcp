@@ -11,11 +11,6 @@ fun Application.configureFrameworks() {
         modules(
             module {
                 single<ApplicationConfig> { environment.config }
-                single<HelloService> {
-                    HelloService {
-                        println(environment.log.info("Hello, World!"))
-                    }
-                }
             },
             ollamaModule
         )
