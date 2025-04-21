@@ -12,7 +12,7 @@ import org.koin.ktor.ext.inject
 data class PromptRequest(val prompt: String)
 
 fun Application.configureRouting() {
-    val ollamaService: OllamaService by inject()
+    val ollamaService: OllamaService by inject<OllamaService>()
 
     routing {
         post("/ollama") {
